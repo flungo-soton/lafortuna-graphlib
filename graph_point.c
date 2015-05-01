@@ -54,3 +54,59 @@ graph_point * graph_point_add(graph_point *point, const int x, const int y) {
   }
   return newPoint;
 }
+
+graph_point * graph_point_trimLT(graph_point *start, double x) {
+  /* Move backwards until first value that is in the range we want to delete */
+  while (start->xv < x) {
+    start = start->prev;
+  }
+  /* Some additional places to store our pointers */
+  graph_point *curr = start, *next;
+  /* If there is a previous, lets store that in start so we can can clear
+   * backwards after.
+   */
+  start = curr->prev;
+  /* Move forwards deleting anything that is less than x */
+  while (curr->xv < x) {
+    next = curr->next;
+    free(curr);
+    curr = next;
+  }
+  /* The last assignment of next will be the new tail */
+  next->prev = NULL;
+  /* Move backwards from start deleting everything */
+  curr = start;
+  while (curr) {
+    next = curr->prev;
+    free(curr);
+    curr = next;
+  }
+}
+
+graph_point * graph_point_trimGT(graph_point *start, double x) {
+  /* Move forwards until first value that is in the range we want to delete */
+  while (start->xv > x) {
+    start = start->next;
+  }
+  /* Some additional places to store our pointers */
+  graph_point *curr = start, *next;
+  /* If there is a next, lets store that in start so we can can clear
+   * forwards after.
+   */
+  start = curr->next;
+  /* Move backwards deleting anything that is less than x */
+  while (curr->xv > x) {
+    next = curr->prev;
+    free(curr);
+    curr = next;
+  }
+  /* The last assignment of next will be the new head */
+  next->next = NULL;
+  /* Move forwards from start deleting everything */
+  curr = start;
+  while (curr) {
+    next = curr->next;
+    free(curr);
+    curr = next;
+  }
+}
