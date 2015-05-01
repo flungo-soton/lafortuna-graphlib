@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stddef.h>
 #include "graph_point.h"
 
 graph_point * graph_point_add(graph_point *point, const int x, const int y) {
@@ -56,12 +57,15 @@ graph_point * graph_point_add(graph_point *point, const int x, const int y) {
 }
 
 graph_point * graph_point_trimLT(graph_point *start, double x) {
+  /* Some additional places to store our pointers */
+  graph_point *curr, *next;
   /* Move backwards until first value that is in the range we want to delete */
   while (start->xv < x) {
     start = start->prev;
   }
-  /* Some additional places to store our pointers */
-  graph_point *curr = start, *next;
+  /* Initialise pointers */
+  curr = start;
+  next = NULL;
   /* If there is a previous, lets store that in start so we can can clear
    * backwards after.
    */
@@ -72,24 +76,31 @@ graph_point * graph_point_trimLT(graph_point *start, double x) {
     free(curr);
     curr = next;
   }
-  /* The last assignment of next will be the new tail */
-  next->prev = NULL;
-  /* Move backwards from start deleting everything */
-  curr = start;
-  while (curr) {
-    next = curr->prev;
-    free(curr);
-    curr = next;
+  if (next) {
+    /* The last assignment of next will be the new head */
+    next->next = NULL;
   }
+  /* Move backwards from start deleting everything */
+  /* NOT USING `next` to preserve value for return */
+  while (start) {
+    curr = start->prev;
+    free(start);
+    start = curr;
+  }
+  /* return new tail */
+  return next;
 }
 
 graph_point * graph_point_trimGT(graph_point *start, double x) {
+  /* Some additional places to store our pointers */
+  graph_point *curr, *next;
   /* Move forwards until first value that is in the range we want to delete */
   while (start->xv > x) {
     start = start->next;
   }
   /* Some additional places to store our pointers */
-  graph_point *curr = start, *next;
+  curr = start;
+  next = NULL;
   /* If there is a next, lets store that in start so we can can clear
    * forwards after.
    */
@@ -100,13 +111,17 @@ graph_point * graph_point_trimGT(graph_point *start, double x) {
     free(curr);
     curr = next;
   }
-  /* The last assignment of next will be the new head */
-  next->next = NULL;
-  /* Move forwards from start deleting everything */
-  curr = start;
-  while (curr) {
-    next = curr->next;
-    free(curr);
-    curr = next;
+  if (next) {
+    /* The last assignment of next will be the new head */
+    next->next = NULL;
   }
+  /* Move forwards from start deleting everything */
+  /* NOT USING `next` to preserve value for return */
+  while (start) {
+    curr = start->next;
+    free(start);
+    start = curr;
+  }
+  /* return new head */
+  return next;
 }
