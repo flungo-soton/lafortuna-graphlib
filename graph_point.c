@@ -125,3 +125,35 @@ graph_point * graph_point_trimGT(graph_point *start, double x) {
   /* return new head */
   return next;
 }
+
+void graph_point_remove(graph_point *point) {
+  /* If point has a next, bridge to prev */
+  if (point->next) {
+    point->next->prev = point->prev;
+  }
+  /* If point has a prev, bridge to next */
+  if (point->prev) {
+    point->prev->next = point->next;
+  }
+  /* Free the space used by point */
+  free(point);
+}
+
+void graph_point_removeAll(graph_point *start) {
+  /* Some additional places to store our pointers */
+  graph_point *curr = start->next; /* Keep start for now */
+  graph_point *next;
+  /* Go forward from curr */
+  while (curr) {
+    next = curr->next;
+    free(curr);
+    curr = next;
+  }
+  /* Go back from start */
+  curr = start;
+  while (curr) {
+    next = curr->prev;
+    free(curr);
+    curr = next;
+  }
+}
