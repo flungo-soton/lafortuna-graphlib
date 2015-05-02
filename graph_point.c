@@ -4,7 +4,7 @@
 
 graph_point * graph_point_add(graph_point *point, const int x, const int y) {
   /* Allocate memory for new point */
-  graph_point *newPoint = (graph_point *) malloc(sizeof(graph_point));
+  graph_point *newPoint = (graph_point *) calloc(sizeof(graph_point));
   *(int *)&newPoint->x = x;
   *(int *)&newPoint->y = y;
   /* If no point is specified, we are starting a new linked list */
