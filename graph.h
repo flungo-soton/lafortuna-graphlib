@@ -2,21 +2,23 @@
 #include <stdbool.h>
 #include "graph_point.h"
 
+#define GRAPH_PLOT_LIMIT 16;
+
 typedef struct graph_plot graph_plot;
 typedef struct graph graph;
 
 struct graph {
 	lcd *display;
   rectangle drawingArea;
-  char *title[48];
-  char *xAxisLabel[32];
-  char *yAxisLabel[32];
+  char** title;
+  char** xAxisLabel;
+  char** yAxisLabel;
   double minX, maxX, minY, maxY;
   bool drawn;
   bool autoScaleX, autoScaleY, autoPanX, autoPanY;
   bool loopX, loopY;
   int loopOverPointX, loopOverPointY;
-  graph_plot **plots[8];
+  graph_plot** plots;
 };
 
 struct graph_plot {

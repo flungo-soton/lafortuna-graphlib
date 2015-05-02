@@ -1,10 +1,16 @@
 #include "graph.h"
+#include <stdlib.h>
 #include <stddef.h>
+#include <stdbool.h>
+#include <string.h>
 
 graph * graph_create(lcd *display) {
-  graph *graph = (graph *) malloc(sizeof(graph));
+  graph *graph = malloc(sizeof(graph));
   graph->display = display;
-  graph->drawingArea = { 0, 0, display.width, display.height };
+  graph->drawingArea.left = 0;
+  graph->drawingArea.right = display->width - 1;
+  graph->drawingArea.top = 0;
+  graph->drawingArea.bottom = display->height - 1;
   graph->title = NULL;
   graph->xAxisLabel = NULL;
   graph->yAxisLabel = NULL;
@@ -12,17 +18,17 @@ graph * graph_create(lcd *display) {
   graph->maxX = 1;
   graph->minY = -1;
   graph->maxY = 1;
-  graph->drawn = FALSE;
-  graph->autoScaleX = FALSE;
-  graph->autoScaleY = FALSE;
-  graph->autoPanX = FALSE;
-  graph->autoPanY = FALSE;
-  graph->loopX = FALSE;
-  graph->loopY = FALSE;
+  graph->drawn = false;
+  graph->autoScaleX = false;
+  graph->autoScaleY = false;
+  graph->autoPanX = false;
+  graph->autoPanY = false;
+  graph->loopX = false;
+  graph->loopY = false;
   graph->loopOverPointX = 0;
   graph->loopOverPointY = 0;
-  /* Allocate space for 8 pointers to graph plots */
-  graph->plots = (graph_plot **) calloc(8 * sizeof(graph_plot *));
+  /* Keep pointer null until we actually assign */
+  graph->plots = NULL;
   return graph;
 }
 
@@ -34,19 +40,19 @@ void graph_setDrawingArea(graph *graph, rectangle area) {
 }
 
 void graph_setTitle(graph *graph, char *title) {
-  graph->title = title;
+  graph->title = &title;
   if (graph->drawn) {
     graph_redraw(graph);
   }
 }
 void graph_setXAxisLabel(graph *graph, char *label) {
-  graph->xAxisLabel = label;
+  graph->xAxisLabel = &label;
   if (graph->drawn) {
     graph_redraw(graph);
   }
 }
 void graph_setYAxisLabel(graph *graph, char *label) {
-  graph->yAxisLabel = label;
+  graph->yAxisLabel = &label;
   if (graph->drawn) {
     graph_redraw(graph);
   }
