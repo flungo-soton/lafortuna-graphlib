@@ -92,3 +92,23 @@ void graph_setAutoPanX(graph *graph, bool autoPan) {
 void graph_setAutoPanY(graph *graph, bool autoPan) {
   graph->autoPanY = autoPan;
 }
+
+void graph_draw(graph *graph) {
+  if (graph->drawn) {
+    return;
+  }
+  /* TODO: Graph drawing logic */
+  graph->drawn = true;
+}
+
+void graph_redraw(graph *graph) {
+  if (graph->drawn) {
+    graph_clear(graph);
+  }
+  graph_draw(graph);
+}
+
+void graph_clear(graph *graph) {
+/* TODO: Graph clearing logic */
+  graph->drawn = false;
+}
