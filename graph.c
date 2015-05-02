@@ -58,8 +58,25 @@ void graph_setXAxisRange(graph *graph, double min, double max){
   graph->maxX = max;
   CHECK_REDRAW
 }
+
 void graph_setYAxisRange(graph *graph, double min, double max){
   graph->minY = min;
   graph->maxY = max;
   CHECK_REDRAW
+}
+
+void graph_setAutoScaleX(graph *graph, bool autoScale) {
+  graph->autoScaleX = autoScale;
+}
+
+void graph_setAutoScaleY(graph *graph, bool autoScale) {
+  graph->autoScaleY = autoScale;
+}
+
+void graph_setAutoPanX(graph *graph, bool autoPan) {
+  graph->autoPanX = autoPan;
+}
+
+void graph_setAutoPanY(graph *graph, bool autoPan) {
+  graph->autoPanY = autoPan;
 }
