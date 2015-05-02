@@ -8,15 +8,15 @@ typedef struct graph graph;
 struct graph {
 	lcd *display;
   rectangle *drawingArea;
-  char *Title[48];
+  char *title[48];
   char *xAxisLabel[32];
   char *yAxisLabel[32];
   double minX, maxX, minY, maxY;
   bool drawn;
   bool autoScaleX, autoScaleY, autoPanX, autoPanY;
   bool loopX, loopY;
-  int loopOverPoint;
-  graph_plot *plots[8];
+  int loopOverPointX, loopOverPointY;
+  graph_plot **plots[8];
 };
 
 struct graph_plot {
