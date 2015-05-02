@@ -7,7 +7,7 @@ typedef struct graph graph;
 
 struct graph {
 	lcd *display;
-  rectangle *drawingArea;
+  rectangle drawingArea;
   char *title[48];
   char *xAxisLabel[32];
   char *yAxisLabel[32];
@@ -36,7 +36,7 @@ struct graph_plot {
 graph * graph_create(lcd *display);
 
 /* Set the area which the graph should be drawn */
-void graph_setDrawingArea(graph *graph, rectangle *area);
+void graph_setDrawingArea(graph *graph, rectangle area);
 
 /* Set graph text */
 void graph_setTitle(graph *graph, char *title);
