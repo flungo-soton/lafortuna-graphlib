@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#define CHECK_REDRAW if (graph->drawn) graph_redraw(graph);
+
 graph * graph_create(lcd *display) {
   graph *graph = malloc(sizeof(graph));
   graph->display = display;
@@ -11,6 +13,7 @@ graph * graph_create(lcd *display) {
   graph->drawingArea.right = display->width - 1;
   graph->drawingArea.top = 0;
   graph->drawingArea.bottom = display->height - 1;
+  /* No need to allocate any space for variables that might not be set */
   graph->title = NULL;
   graph->xAxisLabel = NULL;
   graph->yAxisLabel = NULL;
@@ -34,26 +37,18 @@ graph * graph_create(lcd *display) {
 
 void graph_setDrawingArea(graph *graph, rectangle area) {
   graph->drawingArea = area;
-  if (graph->drawn) {
-    graph_redraw(graph);
-  }
+  CHECK_REDRAW
 }
 
 void graph_setTitle(graph *graph, char *title) {
   graph->title = &title;
-  if (graph->drawn) {
-    graph_redraw(graph);
-  }
+  CHECK_REDRAW
 }
 void graph_setXAxisLabel(graph *graph, char *label) {
   graph->xAxisLabel = &label;
-  if (graph->drawn) {
-    graph_redraw(graph);
-  }
+  CHECK_REDRAW
 }
 void graph_setYAxisLabel(graph *graph, char *label) {
   graph->yAxisLabel = &label;
-  if (graph->drawn) {
-    graph_redraw(graph);
-  }
+  CHECK_REDRAW
 }
