@@ -63,6 +63,8 @@ void graph_setAutoPanY(graph *graph, bool autoPan);
 void graph_draw(graph *graph);
 /* Redraw completely */
 void graph_redraw(graph *graph);
+/* Clear the graph area */
+void graph_clear(graph *graph);
 
 /* Pan the graph */
 void graph_panX(graph *graph, double panX);

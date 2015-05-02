@@ -36,8 +36,20 @@ graph * graph_create(lcd *display) {
 }
 
 void graph_setDrawingArea(graph *graph, rectangle area) {
+  /* We will have to redraw if drawn. To make sure we don't have any pixels not
+   * cleared then we will clear the current area
+   * Clearing will set drawn to false so if it was drawn we must remember this
+   * and call draw once complete
+   */
+  bool drawn = graph->drawn;
+  if (drawn) {
+    graph_clear(graph);
+  }
   graph->drawingArea = area;
-  CHECK_REDRAW
+  if (drawn) {
+    /* We cleared so we must now draw again */
+    graph_draw(graph);
+  }
 }
 
 void graph_setTitle(graph *graph, char *title) {
