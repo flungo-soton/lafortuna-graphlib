@@ -25,3 +25,29 @@ graph * graph_create(lcd *display) {
   graph->plots = (graph_plot **) calloc(8 * sizeof(graph_plot *));
   return graph;
 }
+
+void graph_setDrawingArea(graph *graph, rectangle area) {
+  graph->drawingArea = area;
+  if (graph->drawn) {
+    graph_redraw(graph);
+  }
+}
+
+void graph_setTitle(graph *graph, char *title) {
+  graph->title = title;
+  if (graph->drawn) {
+    graph_redraw(graph);
+  }
+}
+void graph_setXAxisLabel(graph *graph, char *label) {
+  graph->xAxisLabel = label;
+  if (graph->drawn) {
+    graph_redraw(graph);
+  }
+}
+void graph_setYAxisLabel(graph *graph, char *label) {
+  graph->yAxisLabel = label;
+  if (graph->drawn) {
+    graph_redraw(graph);
+  }
+}
