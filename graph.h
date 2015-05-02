@@ -41,6 +41,9 @@ graph * graph_create(lcd *display);
 void graph_setDrawingArea(graph *graph, rectangle area);
 
 /* Set graph text */
+/* Arrays should be allocated in heap before passing and be a valid, null
+ * terminated string.
+ */
 void graph_setTitle(graph *graph, char *title);
 void graph_setXAxisLabel(graph *graph, char *label);
 void graph_setYAxisLabel(graph *graph, char *label);
