@@ -52,3 +52,14 @@ void graph_setYAxisLabel(graph *graph, char *label) {
   graph->yAxisLabel = &label;
   CHECK_REDRAW
 }
+
+void graph_setXAxisRange(graph *graph, double min, double max){
+  graph->minX = min;
+  graph->maxX = max;
+  CHECK_REDRAW
+}
+void graph_setYAxisRange(graph *graph, double min, double max){
+  graph->minY = min;
+  graph->maxY = max;
+  CHECK_REDRAW
+}
